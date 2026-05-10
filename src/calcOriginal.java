@@ -1,122 +1,133 @@
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class calcOriginal {
+/**
+ *
+ * @author Precious Aikhomun
+ */
+public class CalcOriginal {
 
     public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        ArrayList<Double> array = new ArrayList<>();
 
-        Scanner scanner = new Scanner(System.in);
-        
-        double[] tempCalificaciones = new double[100]; 
-        double calificacionIngresada;
-        int contador = 0; 
+        System.out.println("Hola, \nPara poder calcular la media, te ingresarás tus notas (entre 1 y 10)");
+        System.out.println("Introduce un número menor que 1 para finalizar.");
 
-        while (true) {
-            System.out.print("Ingrese una calificación (menor a 1 para terminar): ");
-            calificacionIngresada = scanner.nextDouble(); 
+        double nota;
 
-            if (calificacionIngresada >= 1.0) {
-                tempCalificaciones[contador] = calificacionIngresada; 
-                contador++; 
-            } else {
-                break; 
+        // Pedir nota mientras que sea menor que 10 y no parar hasta que le des un
+        // número menor que 1
+        do {
+            System.out.print("Ingresa la nota: ");
+            nota = scan.nextDouble();
+
+            while (nota > 10) {
+                System.out.println("Error, debe estar entre 1 y 10");
+                nota = scan.nextDouble();
             }
-        } 
 
-        double[] calificaciones = new double[contador];
-        
-        for (int i = 0; i < contador; i++) {
-            calificaciones[i] = tempCalificaciones[i]; 
+            if (nota >= 1 && nota <= 10) {
+                array.add(nota);
+            }
+
+        } while (nota >= 1);
+
+        // Mostrar nº de notas agregado
+        int modificar;
+        System.out.println("Tus calificaciones:");
+        for (int i = 0; i < array.size(); i++) {
+            System.out.println((i + 1) + ". " + array.get(i));
         }
 
-        System.out.println("\n--- Listado de Calificaciones Introducidas ---");
-        for (int i = 0; i < calificaciones.length; i++) {
-            System.out.println("Posición " + i + ": " + calificaciones[i]);
-        }
+        // Modificar notas
+        do {
+            System.out.println("Te gustaria cambiar alguna nota?");
+            System.out.println("1. Si \n2. No");
+            modificar = scan.nextInt();
 
-        String deseaModificar = ""; 
-        boolean continuarModificando = true;
-        
-        while (continuarModificando) {
-            System.out.print("\n¿Desea modificar alguna calificación? (si/no): ");
-            deseaModificar = scanner.next();
+        } while (modificar < 1 || modificar > 2);
 
-            if (deseaModificar.equals("si")) { 
-                System.out.print("Indique la posición a modificar (0 a " + (calificaciones.length - 1) + "): ");
-                int posicionModificar = scanner.nextInt();
-                
-                System.out.print("Ingrese el nuevo valor: ");
-                double nuevoValor = scanner.nextDouble();
+        while (modificar == 1) {
 
-                if (posicionModificar >= 0 && posicionModificar < calificaciones.length) {
-                    calificaciones[posicionModificar] = nuevoValor;
-                    System.out.println("Calificación en posición " + posicionModificar + " modificada a " + nuevoValor);
-                } else {
-                    System.out.println("Posición inválida.");
-                }
+            System.out.print("Posicion a cambiar: ");
+            int posicion = scan.nextInt();
+
+            System.out.print("Nueva nota (1-10): ");
+            double nuevaNota = scan.nextDouble();
+
+            if (posicion >= 1 && posicion <= array.size() && nuevaNota >= 1 && nuevaNota <= 10) {
+
+                array.set(posicion - 1, nuevaNota);
+                System.out.println("Se ha cambiado correctamente.");
+
             } else {
-                continuarModificando = false; 
+                System.out.println("Datos inválidos.");
+            }
+
+            do {
+                System.out.println("\nModificamos otra nota?");
+                System.out.println("1: Sí \n2: No");
+                modificar = scan.nextInt();
+            } while (modificar < 1 || modificar > 2);
+        }
+
+        // Eliminar nota?
+        int eliminar, pos;
+        System.out.println("Eliminamos alguna nota? \n1: Sí \n2: No");
+        eliminar = scan.nextInt();
+
+        while (eliminar < 1 || eliminar > 2) {
+            System.out.println("Error. Elige \n1: Sí \n2: No");
+            eliminar = scan.nextInt();
+        }
+
+        // Eliminar notas
+        while (eliminar == 1) {
+
+            do {
+                System.out.println("Cual es la posición de la nota a eliminar?");
+                pos = scan.nextInt();
+
+                if (pos < 1 || pos > array.size()) {
+                    System.out.println("Posición inválida. Debe estar entre 1 y " + array.size());
+                }
+            } while (pos < 1 || pos > array.size());
+
+            array.remove(pos - 1);
+
+            // Mostrar listado actualizado
+            if (array.size() > 0) {
+                System.out.println("Listado actualizado de notas:");
+                for (int i = 0; i < array.size(); i++) {
+                    System.out.println((i + 1) + ". " + array.get(i));
+                }
+
+                System.out.println("¿Deseas eliminar otra nota? \n1: Sí \n2: No");
+                eliminar = scan.nextInt();
+
+                while (eliminar < 1 || eliminar > 2) {
+                    System.out.println("Opción no válida. Por favor, elige 1: Sí - 2: No");
+                    eliminar = scan.nextInt();
+                }
+            } else {// Lista vacía
+                eliminar = 2;
             }
         }
-        
-        String deseaEliminar = "";
-        boolean continuarEliminando = true;
 
-        while (continuarEliminando) {
-            System.out.print("\n¿Desea eliminar alguna calificación? (si/no): ");
-            deseaEliminar = scanner.next();
-
-            if (deseaEliminar.equals("si")) {
-                
-                if (calificaciones.length == 0) {
-                    System.out.println("No hay calificaciones para eliminar.");
-                    continuarEliminando = false; 
-                }
-
-                System.out.print("Indique la posición a eliminar (0 a " + (calificaciones.length - 1) + "): ");
-                int posicionEliminar = scanner.nextInt();
-
-                if (posicionEliminar >= 0 && posicionEliminar < calificaciones.length) {
-                    
-                    double[] nuevoArray = new double[calificaciones.length - 1];
-                    int j = 0;
-                    
-                    for (int i = 0; i < calificaciones.length; i++) {
-                        if (i != posicionEliminar) { 
-                            nuevoArray[j] = calificaciones[i];
-                            j++;
-                        }
-                    }
-                    
-                    calificaciones = nuevoArray; 
-                    System.out.println("Calificación en posición " + posicionEliminar + " eliminada.");
-
-                    System.out.println("\n--- Listado Actualizado ---");
-                    for (int i = 0; i < calificaciones.length; i++) {
-                        System.out.println("Posición " + i + ": " + calificaciones[i]);
-                    }
-                    
-                } else {
-                    System.out.println("Posición inválida.");
-                }
-            } else {
-                continuarEliminando = false; 
+        // Cálculo de la media
+        if (!array.isEmpty()) {
+            double suma = 0;
+            for (double n : array) {
+                suma += n;
             }
+            double media = suma / array.size();
+            System.out.println("La media es: " + media);
+        } else {
+            System.out.println("No se ingresaron notas válidas.");
         }
+        scan.close();
 
-        double suma = 0.0;
-        for (int i = 0; i < calificaciones.length; i++) {
-            suma += calificaciones[i]; 
-        }
-
-        double media = 0.0;
-        if (calificaciones.length > 0) { 
-            media = suma / (double) calificaciones.length; 
-        }
-
-        System.out.println("\n--- Resultado Final ---");
-        System.out.println("La media de todas las calificaciones introducidas es: " + media);
-
-        scanner.close();
     }
 }
-
