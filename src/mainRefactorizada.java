@@ -3,29 +3,66 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class MainRefactorizada {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
         Map<String, Double> notas = new HashMap<>();
 
-        //Pedir Asignaturas
+        // Pedir Asignaturas
+        System.out.println(
+                "A continuacion te pediremos que introduzcas tu asignatura y seguido la nota. \n Cuando hayas terminado, escribe la palabra 'fin' para guardar.");
         boolean continuar = true;
         while (continuar) {
 
-             System.out.println("Asignatura: ");
-             String asignatura = scan.nextLine();
+            System.out.println("Asignatura: ");
+            String asignatura = scan.nextLine();
 
-             if (asignatura.equalsIgnoreCase("fin")) {
+            if (asignatura.equalsIgnoreCase("fin")) {
 
-                continuar = false;    
+                continuar = false;
 
-             } else {
+            } else {
 
                 System.out.println("Nota: ");
-                double nota= scan.nextDouble();
+                double nota = scan.nextDouble();
                 scan.nextLine();
 
                 notas.put(asignatura, nota);
-             }
+            }
+        }
+
+        System.out.println("\n--- LISTADO DE NOTAS ---");
+        for (String asignatura : notas.keySet()) {
+            System.out.println(asignatura + " -> " + notas.get(asignatura));
+        }
+
+        System.out.println(\n "¿Deseas modificar alguna nota? \n 1. Sí \n 2. No");
+
+        int opcionModificar = scan.nextInt();
+        scan.nextLine();
+
+        while (opcionModificar ==1) {
+            
+            System.out.println("Asignatura a modificar: ");
+            String asignaturaModificar = scan.nextLine();
+
+            if (notas.containsKey(asignaturaModificar)) {
+
+                System.out.println("Nueva nota: ");
+                double nuevaNota = scan.nextDouble();
+                scan.nextLine();
+
+                notas.put(asignaturaModificar, nuevaNota);
+
+                System.out.println("Nota modificada correctamente.");
+            } else {
+                System.out.println("La asignatura no existe.");
+            }
+
+            System.out.println(\n "¿Deseas modificar otra nota? \n 1. Sí \n 2. No");
+
+            opcionModificar = scan.nextInt();
+            scan.nextLine();
+        }
     }
 }
