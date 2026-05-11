@@ -36,13 +36,13 @@ public class MainRefactorizada {
             System.out.println(asignatura + " -> " + notas.get(asignatura));
         }
 
-        System.out.println(\n "¿Deseas modificar alguna nota? \n 1. Sí \n 2. No");
+        System.out.println("\n¿Deseas modificar alguna nota? \n 1. Sí \n 2. No");
 
         int opcionModificar = scan.nextInt();
         scan.nextLine();
 
-        while (opcionModificar ==1) {
-            
+        while (opcionModificar == 1) {
+
             System.out.println("Asignatura a modificar: ");
             String asignaturaModificar = scan.nextLine();
 
@@ -59,10 +59,52 @@ public class MainRefactorizada {
                 System.out.println("La asignatura no existe.");
             }
 
-            System.out.println(\n "¿Deseas modificar otra nota? \n 1. Sí \n 2. No");
+            System.out.println("\n¿Deseas modificar otra nota? \n 1. Sí \n 2. No");
 
             opcionModificar = scan.nextInt();
             scan.nextLine();
         }
+
+        // Eliminar nota
+        System.out.println("\n--- LISTADO DE NOTAS ---");
+        for (String asignatura : notas.keySet()) {
+            System.out.println(asignatura + " -> " + notas.get(asignatura));
+        }
+
+        System.out.println("\n¿Deseas Eliminar alguna nota? \n 1. Sí \n 2. No");
+
+        int opcionEliminar = scan.nextInt();
+        scan.nextLine();
+        while (opcionEliminar == 1) {
+
+            System.out.println("Asignatura a eliminar: ");
+            String asignaturaEliminar = scan.nextLine();
+
+            if (notas.containsKey(asignaturaEliminar)) {
+
+                notas.remove(asignaturaEliminar);
+
+                System.out.println("Asignatura eliminada correctamente.");
+            } else {
+                System.out.println("La asignatura no existe.");
+            }
+
+            if (!notas.isEmpty()) {
+                System.out.println("\n--- LISTADO DE NOTAS ---");
+                for (String asignatura : notas.keySet()) {
+                    System.out.println(asignatura + " -> " + notas.get(asignatura));
+                }
+                System.out.println("\n¿Deseas eliminar otra nota? \n 1. Sí \n 2. No");
+
+                opcionEliminar = scan.nextInt();
+                scan.nextLine();
+            } else {
+                System.out.println("No quedan asignaturas.");
+
+                opcionEliminar = 2;
+            }
+
+        }
+
     }
 }
