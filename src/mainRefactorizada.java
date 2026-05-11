@@ -11,7 +11,9 @@ public class MainRefactorizada {
         // Pedir Asignaturas
         System.out.println(
                 "A continuacion te pediremos que introduzcas tu asignatura y seguido la nota. \n Cuando hayas terminado, escribe la palabra 'fin' para guardar.");
+
         boolean continuar = true;
+        
         while (continuar) {
 
             System.out.println("Asignatura: ");
@@ -75,6 +77,7 @@ public class MainRefactorizada {
 
         int opcionEliminar = scan.nextInt();
         scan.nextLine();
+
         while (opcionEliminar == 1) {
 
             System.out.println("Asignatura a eliminar: ");
@@ -106,5 +109,22 @@ public class MainRefactorizada {
 
         }
 
+        //Calcular media
+        double suma = 0;
+
+        for (Double nota : notas.values()) {
+            suma += nota;
+        }
+
+        if (!notas.isEmpty()) {
+            
+            double media = suma / notas.size();
+            System.out.println("\nLa media final es: " + media);
+
+        } else {
+            System.out.println("\nNo hay notas para hacer media");
+        }
+
+        scan.close();
     }
 }
